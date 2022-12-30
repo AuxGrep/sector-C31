@@ -4,10 +4,13 @@ import os
 import urllib.request
 import requests
 import requests, json 
+import sys
+
+# USAGE: sudo python3 c31.py <serverAddr> 
 
 API_key = "4f1d22173f8547d7bfba4862dcec1aaa" #register for free to get it https://vpnapi.io/
-server = "c2server.duckdns.org"
-server_port = "4620" #this is ssh port on your server
+server = str(sys.argv[1])
+server_port = "22" #this is ssh port on your server
 local_server = "127.0.0.1" #this is local host from client machine
 network_test = "https://twitter.com"
 
@@ -20,13 +23,10 @@ def connect(host=network_test):
         return False
 print("Checking for internet Connection!! wait")
 time.sleep(3)
-os.system('clear')
-print("")
+
+
 if connect():
-	#print ("CONNECTED!!!Now proceed!!")
-	#time.sleep(2)
-	#print("")
-	os.system('clear')
+	time.sleep(1)
 else:
 	print("Hey! Connect your pc with internet! Damn!!")
 	exit(1)
@@ -38,7 +38,7 @@ def checkip():
 	response = requests.get("https://vpnapi.io/api/" + out + "?key=" + API_key)
 	data = json.loads(response.text)
 	if data["security"]["vpn"] == False:
-		print("Please use VPN, your PUBLIC IP is {}".format(out))
+		print("Please use VPN, your PUBLIC IP is {0}".format(out))
 		exit(1)
 	else:
 		print("Vpn detected continue!!!!...GOODLUCKY")
